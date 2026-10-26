@@ -1,0 +1,343 @@
+<!-- UnderwritePro - Underwriting System Template (No Database) -->
+<!-- Free Web Development Internship Online Task -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnderwritePro - Underwriting System</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="brand">
+            <i class="fas fa-shield-alt"></i> UnderwritePro
+        </div>
+        <ul class="nav-links">
+            <li><a href="#dashboard" class="active"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+            <li><a href="#applications"><i class="fas fa-folder-open"></i> Applications</a></li>
+            <li><a href="#risk-assessment"><i class="fas fa-calculator"></i> Risk Assessment</a></li>
+            <li><a href="#guidelines"><i class="fas fa-book-open"></i> Guidelines</a></li>
+            <li><a href="#decisions"><i class="fas fa-gavel"></i> Decisions</a></li>
+            <li><a href="#policy-issuance"><i class="fas fa-file-contract"></i> Policy Issuance</a></li>
+            <li><a href="#documents"><i class="fas fa-file-alt"></i> Documents</a></li>
+            <li><a href="#reports"><i class="fas fa-file-export"></i> Reports</a></li>
+            <li><a href="#auth"><i class="fas fa-user-lock"></i> Account</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="top-title">
+                <h2 id="page-heading">Dashboard Overview</h2>
+            </div>
+            <div class="top-actions">
+                <button id="theme-toggle" class="btn btn-secondary">
+                    <i class="fas fa-moon"></i> Dark Mode
+                </button>
+                <div class="user-profile">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="user-display-name">Underwriter Admin</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Applications</h3>
+                    <p class="stat-value" id="stat-total">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Approved</h3>
+                    <p class="stat-value text-success" id="stat-approved">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Under Review</h3>
+                    <p class="stat-value text-warning" id="stat-review">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Declined</h3>
+                    <p class="stat-value text-danger" id="stat-declined">0</p>
+                </div>
+            </div>
+
+            <!-- Analytics Visual Chart (CSS/HTML Based) -->
+            <div class="card">
+                <h3><i class="fas fa-chart-bar"></i> Risk Breakdown Analytics</h3>
+                <div class="analytics-chart-container">
+                    <div class="chart-bar-wrap">
+                        <span>Low Risk</span>
+                        <div class="chart-bar-bg"><div class="chart-bar bar-low" id="bar-low" style="width: 0%;"></div></div>
+                    </div>
+                    <div class="chart-bar-wrap">
+                        <span>Medium Risk</span>
+                        <div class="chart-bar-bg"><div class="chart-bar bar-med" id="bar-med" style="width: 0%;"></div></div>
+                    </div>
+                    <div class="chart-bar-wrap">
+                        <span>High Risk</span>
+                        <div class="chart-bar-bg"><div class="chart-bar bar-high" id="bar-high" style="width: 0%;"></div></div>
+                    </div>
+                    <div class="chart-bar-wrap">
+                        <span>Critical Risk</span>
+                        <div class="chart-bar-bg"><div class="chart-bar bar-critical" id="bar-critical" style="width: 0%;"></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Applications Section -->
+        <section id="applications" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Insurance Applications</h3>
+                    <div class="search-filter-box">
+                        <input type="text" id="app-search" placeholder="Search by name or APP #...">
+                        <select id="app-status-filter">
+                            <option value="ALL">All Statuses</option>
+                            <option value="submitted">Submitted</option>
+                            <option value="under-review">Under Review</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Declined">Declined</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>APP ID</th>
+                                <th>Applicant Name</th>
+                                <th>Policy Type</th>
+                                <th>Coverage ($)</th>
+                                <th>Risk Score</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="applications-tbody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Risk Assessment Calculator Section -->
+        <section id="risk-assessment" class="section">
+            <div class="card">
+                <h3><i class="fas fa-calculator"></i> Evaluate Applicant Risk</h3>
+                <form id="risk-calculator-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Applicant Name</label>
+                            <input type="text" id="calc-name" required placeholder="e.g. Alex Morgan">
+                        </div>
+                        <div class="form-group">
+                            <label>Age</label>
+                            <input type="number" id="calc-age" min="18" max="100" required placeholder="e.g. 35">
+                        </div>
+                        <div class="form-group">
+                            <label>Policy Type</label>
+                            <select id="calc-policy" required>
+                                <option value="Life Insurance">Life Insurance</option>
+                                <option value="Health Insurance">Health Insurance</option>
+                                <option value="Auto Insurance">Auto Insurance</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Coverage Amount ($)</label>
+                            <input type="number" id="calc-coverage" min="10000" step="50000" required placeholder="500000">
+                        </div>
+                        <div class="form-group">
+                            <label>Pre-existing Health/Risk Factors</label>
+                            <select id="calc-factors">
+                                <option value="0">None / Excellent Health</option>
+                                <option value="20">Minor (e.g., Mild Asthma, Minor Smoker)</option>
+                                <option value="45">Moderate (e.g., High Blood Pressure)</option>
+                                <option value="70">High (e.g., Major Pre-existing Conditions)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Calculate Risk & Auto-Underwrite</button>
+                </form>
+
+                <div id="risk-result-card" class="result-box hidden">
+                    <h4>Assessment Result</h4>
+                    <p>Calculated Score: <strong id="res-score">0</strong></p>
+                    <p>Risk Level: <span id="res-level-badge" class="badge">Low</span></p>
+                    <p>Automated Recommendation: <strong id="res-recommendation">--</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Guidelines Section -->
+        <section id="guidelines" class="section">
+            <div class="card">
+                <h3>Underwriting Rules & Guidelines</h3>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Rule ID</th>
+                                <th>Category</th>
+                                <th>Criteria</th>
+                                <th>Action Standard</th>
+                            </tr>
+                        </thead>
+                        <tbody id="guidelines-tbody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Decision Management Section -->
+        <section id="decisions" class="section">
+            <div class="card">
+                <h3><i class="fas fa-gavel"></i> Decision Management & Workflow</h3>
+                <form id="decision-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Select Application</label>
+                            <select id="decision-app-select" required>
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Underwriting Decision</label>
+                            <select id="decision-action" required>
+                                <option value="Approved">✅ Approve</option>
+                                <option value="Declined">❌ Decline</option>
+                                <option value="Request More Info">📋 Request More Info</option>
+                                <option value="Refer to Senior">🔀 Refer to Senior</option>
+                                <option value="Counter Offer">📝 Counter Offer</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Decision Notes / Comments</label>
+                            <textarea id="decision-notes" rows="3" placeholder="Add specific underwriting reason or conditions..."></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Decision</button>
+                </form>
+
+                <h4 style="margin-top: 25px;">Application Timeline & History</h4>
+                <div id="timeline-container" class="timeline">
+                    <!-- Dynamic timeline items -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Policy Issuance Section -->
+        <section id="policy-issuance" class="section">
+            <div class="card">
+                <h3><i class="fas fa-file-contract"></i> Policy Issuance</h3>
+                <p>Generate formal policy contracts for approved applications.</p>
+                <div class="form-group">
+                    <label>Select Approved Application</label>
+                    <select id="issuance-app-select">
+                        <!-- Options filled via JS -->
+                    </select>
+                </div>
+                <button id="btn-generate-policy" class="btn btn-primary">Generate Policy Document</button>
+
+                <div id="policy-preview" class="policy-paper hidden">
+                    <h2>OFFICIAL INSURANCE POLICY</h2>
+                    <hr>
+                    <p><strong>Policy Number:</strong> <span id="pol-num">POL-XXXXX</span></p>
+                    <p><strong>Insured Name:</strong> <span id="pol-name">--</span></p>
+                    <p><strong>Coverage Type:</strong> <span id="pol-type">--</span></p>
+                    <p><strong>Coverage Amount:</strong> $<span id="pol-amount">0</span></p>
+                    <p><strong>Status:</strong> ISSUED & ACTIVE</p>
+                    <p class="text-muted">Issued automatically by UnderwritePro Engine.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Document Management Section -->
+        <section id="documents" class="section">
+            <div class="card">
+                <h3><i class="fas fa-file-alt"></i> Supporting Document Management</h3>
+                <form id="doc-upload-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Application Reference</label>
+                            <select id="doc-app-select" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Document Name</label>
+                            <input type="text" id="doc-name" required placeholder="e.g., Medical Report.pdf">
+                        </div>
+                        <div class="form-group">
+                            <label>File Type</label>
+                            <select id="doc-type">
+                                <option value="PDF">PDF</option>
+                                <option value="Image">JPEG/PNG</option>
+                                <option value="DOCX">DOCX</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload Document Record</button>
+                </form>
+
+                <h4 style="margin-top:20px;">Uploaded Records</h4>
+                <table class="table-responsive">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>App ID</th>
+                            <th>Document Name</th>
+                            <th>Type</th>
+                            <th>Upload Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="docs-tbody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Reports Section -->
+        <section id="reports" class="section">
+            <div class="card">
+                <h3><i class="fas fa-file-export"></i> Underwriting Reports</h3>
+                <p>Export underwriting statistics and application records.</p>
+                <div class="report-buttons">
+                    <button id="export-csv" class="btn btn-success"><i class="fas fa-file-csv"></i> Export Applications (CSV)</button>
+                    <button id="export-pdf" class="btn btn-secondary"><i class="fas fa-file-pdf"></i> Print / Export Report (PDF)</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login / Register Section -->
+        <section id="auth" class="section">
+            <div class="card auth-card">
+                <h3><i class="fas fa-user-lock"></i> Underwriter Authentication</h3>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label>Underwriter Email</label>
+                        <input type="email" id="auth-email" value="underwriter@underwritepro.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="auth-pass" value="password123" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Simulate Login</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
